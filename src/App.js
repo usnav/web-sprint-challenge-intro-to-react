@@ -8,14 +8,14 @@ import Details from "./components/Details.js";
 
 const App = () => {
   const [character, setCharacter] = useState([]);
-  const [currentCharacterName, setCurrentCharacterName] = useState(null);
+  const [currentCharacterName, setCurrentCharacterName] = useState('');
 
 
-const openDetails = name => {
+      const openDetails = (name) => {
         setCurrentCharacterName(name);
       };
       const closeDetails = () => {
-        setCurrentCharacterName(null);
+        setCurrentCharacterName('');
       };
 
 
@@ -24,20 +24,14 @@ const openDetails = name => {
       axios.get('https://swapi.dev/api/people/')
       .then(res => {
         setCharacter(res.data);
-      })
+        console.log(res.data);
+      }) 
       .catch(err => console.error(err));
       
     }, []);
 
       
-  const Character = props => (
-        <div className= 'character'>
-            {props.info.name}
-            <button onClick={() => props.openDetails(props.info.name)}>
-                {props.info.birth_year}
-            </button>
-        </div>
-    );
+ 
 
 
    
@@ -56,7 +50,7 @@ const openDetails = name => {
         return <Character info={char} key={char.name} openDetails={openDetails} />
       })}
       {
-        currentCharacterName && <Details characterName = {currentCharacterName} close={closeDetails} />
+        currentCharacterName != '' && <Details characterName = {currentCharacterName} close={closeDetails}    />
       }
       </div>
   );
