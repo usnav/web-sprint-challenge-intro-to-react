@@ -2,32 +2,31 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./App.css";
 import Character from "./components/Character.js";
-import Details from "./components/Details.js";
+
 
 
 
 const App = () => {
   const [character, setCharacter] = useState([]);
-  const [currentCharacterName, setCurrentCharacterName] = useState('');
+  const [currentCharacterName, setCurrentCharacterName] = useState(null);
 
 
       const openDetails = (name) => {
         setCurrentCharacterName(name);
       };
       const closeDetails = () => {
-        setCurrentCharacterName('');
+        setCurrentCharacterName(null);
       };
 
 
     useEffect(() => {
-
+    
       axios.get('https://swapi.dev/api/people/')
       .then(res => {
         setCharacter(res.data);
         console.log(res.data);
       }) 
       .catch(err => console.error(err));
-      
     }, []);
 
       
@@ -49,11 +48,14 @@ const App = () => {
       { character.map(char => {
         return <Character info={char} key={char.name} openDetails={openDetails} />
       })}
-      {
-        currentCharacterName != '' && <Details characterName = {currentCharacterName} close={closeDetails}    />
-      }
+      {/* {
+        currentCharacterName && <Details characterName = {currentCharacterName} close={closeDetails}    />
+      } */}
       </div>
   );
 };
 
 export default App;
+
+
+// currentCharacterName != '' &&
